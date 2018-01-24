@@ -1,0 +1,30 @@
+<nav id="navbar" class="navbar navbar-expand-md navbar-inverse overboard-navbar py-0">
+  <div id="navbarContainer" class="container h-100 align-items-center">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand h-100 d-flex align-items-center" href="#">WGIDA DASHBOARD</a>
+
+    <div id="navbarSupportedContent" class="collapse navbar-collapse h-100 justify-content-end">
+      <ul class="navbar-nav h-100">
+        <li class="nav-item h-100">
+          <a class="nav-link h-100 px-4" routerLink="about" [routerLinkActive]="['navbar-active']">
+            About
+          </a>
+        </li>
+        <li class="nav-item h-100">
+          <a class="nav-link h-100 px-4" routerLink="results" [routerLinkActive]="['navbar-active']">
+            Results
+          </a>
+        </li>
+        <li class="nav-item h-100">
+          <a class="nav-link h-100 px-4" routerLink="simulations" [routerLinkActive]="['navbar-active']">
+            Simulations
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
