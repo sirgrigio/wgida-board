@@ -1,0 +1,23 @@
+@import 'variables';
+
+#navbar {
+  background-color: $wgida-color-500;
+}
+
+a.navbar-brand {
+    color: white;
+}
+
+a.nav-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    &:hover {
+        color: black;
+    }
+}
+
+a.navbar-active {
+    color: black;
+    background-color: $wgida-color-grey-0;
+}
