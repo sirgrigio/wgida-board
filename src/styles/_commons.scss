@@ -1,62 +1,73 @@
-@import 'variables'; 
+@import 'variables';
 @import '../../node_modules/bootstrap/scss/bootstrap';
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
 
 @font-face {
-    font-family: 'Lato';
-    src: url('../assets/fonts/Lato-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
+  font-family: 'Lato';
+  src: url('../assets/fonts/Lato-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Lato';
-    src: url('../assets/fonts/Lato-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
+  font-family: 'Lato';
+  src: url('../assets/fonts/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Raleway';
-    src: url('../assets/fonts/Raleway-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
+  font-family: 'Raleway';
+  src: url('../assets/fonts/Raleway-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Raleway';
-    src: url('../assets/fonts/Raleway-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
+  font-family: 'Raleway';
+  src: url('../assets/fonts/Raleway-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Raleway';
-    src: url('../assets/fonts/Raleway-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
+  font-family: 'Raleway';
+  src: url('../assets/fonts/Raleway-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
 }
 
 @import 'mixins';
-
 * {
-    border-color: $wgida-color-grey-2;
-    @include font-source-sans($weight: 400);
+  border-color: $wgida-color-grey-2;
+  @include font-source-sans($weight: 400);
 }
 
 html,
 body {
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: $wgida-color-grey-0;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: $wgida-color-grey-0;
 }
 
-a,
 h1,
 h2,
 h3,
+.navbar-brand,
+.nav-link {
+  @include font-source-sans-emph($weight: 500);
+}
+
+a {
+  @include font-source-sans-emph($weight: 400);
+}
+
 h4,
 h5,
-h6 {
-    @include font-source-sans-emph($weight: 500);
+h6,
+.datatable-header-cell-label {
+  @include font-source-sans-emph($weight: 300);
 }

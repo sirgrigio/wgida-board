@@ -1,0 +1,26 @@
+@import 'variables';
+
+div.container {
+    position: relative;
+    background: $wgida-color-grey-1;
+    border-style: solid;
+    border-width: 1px;
+}
+
+:host /deep/ datatable-header-cell {
+    padding-left: 0.5rem;
+}
+
+:host /deep/ datatable-body-cell {
+    padding-left: 0.5rem;
+}
+
+:host /deep/ datatable-body-row.active {
+    background: $wgida-color-200;
+    color: white
+}
+
+:host /deep/ datatable-body-row:hover:not(.active) {
+    background: $wgida-color-50;
+    color: black;
+}

@@ -9,6 +9,8 @@ import { SimulationsComponent } from 'app/components/simulations/simulations.com
 import { DatasetComponent } from 'app/components/dataset/dataset.component';
 import { ServicesModule } from 'app/services/services.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingModule } from 'ngx-loading';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, data: { title: 'Wgida/About' } },
@@ -31,7 +33,14 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes, { useHash: true }),
     HttpClientModule,
-    ServicesModule
+    ServicesModule,
+    NgxDatatableModule,
+    LoadingModule.forRoot({
+      backdropBackgroundColour: 'rgba(255,255,255,0.1)',
+      primaryColour: '#00B8D4',
+      secondaryColour: '#00B8D4',
+      tertiaryColour: '#00B8D4'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

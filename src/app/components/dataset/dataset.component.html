@@ -1,5 +1,4 @@
-<div class="container">
-  <p>
-    dataset works!
-  </p>
+<div class="container my-3 p-3">
+  <ngx-datatable class="h-100 w-100" [rows]="rows" [columns]="columns" [loadingIndicator]="loading" [selectionType]="'multiClick'" (select)='onSelect($event)'>
+  </ngx-datatable>
 </div>
