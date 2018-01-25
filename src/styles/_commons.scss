@@ -40,7 +40,10 @@
 }
 
 @import 'mixins';
-* {
+*,
+p,
+label,
+span {
   border-color: $wgida-color-grey-2;
   @include font-source-sans($weight: 400);
 }

@@ -23,6 +23,7 @@
     "@angular/router": "^5.2.0",
     "@kiwigrid/ngx-highcharts": "^0.6.1",
     "@swimlane/ngx-datatable": "^11.1.7",
+    "angular2-multiselect-dropdown": "^2.3.0",
     "bootstrap": "^4.0.0-beta.3",
     "core-js": "^2.4.1",
     "jquery": "^3.3.1",

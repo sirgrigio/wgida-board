@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Stream } from 'app/models/stream.model';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DatasetService } from 'app/services/dataset/dataset.service';
-import { Dataset } from 'app/models/dataset.model';
+import { Simulation } from 'app/models/simulation.model';
 
 @Component({
   selector: 'app-dataset',
@@ -10,47 +11,106 @@ import { Dataset } from 'app/models/dataset.model';
 export class DatasetComponent implements OnInit {
 
   loading: boolean;
-  datasets: Dataset[];
-  rows = [];
-  columns = [
-    { prop: 'name', name: 'Dataset' },
-    { prop: 'simulations', name: 'Simulations' },
-    { prop: 'seeds', name: 'Seeds' },
-    { prop: 'windows', name: 'Windows' },
-    { prop: 'thresholds', name: 'Thresholds' },
-    { prop: 'streams', name: 'Streams' },
-    { prop: 'size', name: 'Avg stream size' },
-  ];
+  selectSettings = {};
+
+  simulations: Simulation[];
+  selectedSimulations: Simulation[] = [];
+  @Output() emitter: EventEmitter<Simulation[]> = new EventEmitter();
+
+  available = {
+    streams: [],
+    shifts: [],
+    windows: [],
+    thresholds: [],
+    nodes: [],
+  };
+
+  selected = {
+    streams: [],
+    shifts: [],
+    windows: [],
+    thresholds: [],
+    nodes: [],
+  };
 
   constructor(private datasetService: DatasetService) { }
 
   ngOnInit() {
     this.loading = true;
     this.datasetService.getDatasets().subscribe(
-      (datasets: Dataset[]) => {
-        this.datasets = datasets;
-        this.datasets.forEach(d => {
-          this.rows.push({
-            name: 'dataset',
-            simulations: d.simulations.length,
-            seeds: new Set(d.simulations.map(s => s.config.seed)).size,
-            windows: new Set(d.simulations.map(s => s.config.window)).size,
-            thresholds: new Set(d.simulations.map(s => s.config.threshold)).size,
-            streams: new Set(d.simulations.map(s => s.stream.filename)).size,
-            size: d.simulations.map(s => s.stream.size).reduce((a, b) => a + b) / d.simulations.length,
-          });
+      (data: Simulation[]) => {
+        this.simulations = data;
+        this.simulations.forEach(s => {
+          this.addIfAbsent(this.available.streams, s.stream.size, s.stream.size.toPrecision(2));
+          this.addIfAbsent(this.available.shifts, s.stream.shift, s.stream.shift.toPrecision(2));
+          this.addIfAbsent(this.available.windows, s.config.window, s.config.window.toPrecision(2));
+          this.addIfAbsent(this.available.thresholds, s.config.threshold, s.config.threshold.toString());
+          this.addIfAbsent(this.available.nodes, s.config.nodes, s.config.nodes.toString());
         });
-        this.rows = [...this.rows];
+        this.selected.streams = this.sortSetReturn(this.available.streams);
+        this.selected.shifts = this.sortSetReturn(this.available.shifts);
+        this.selected.windows = this.sortSetReturn(this.available.windows);
+        this.selected.thresholds = this.sortSetReturn(this.available.thresholds);
+        this.selected.nodes = this.sortSetReturn(this.available.nodes);
+        this.selectedSimulations = this.simulations;
         this.loading = false;
       },
       (error: any) => {
         console.log(error);
       }
     );
+    this.selectSettings = {
+      text: 'Select Values',
+      selectAllText: 'Select All',
+      unSelectAllText: 'Deselect All',
+      badgeShowLimit: 3,
+      classes: 'wgida-select'
+    };
   }
 
-  onSelect(event) {
-    console.log(event);
+  private addIfAbsent(array: any[], v: any, label: string) {
+    if (!array.some(e => e.id === v)) {
+      array.push({ id: v, 'itemName': label });
+    }
   }
 
+  private sortSetReturn(array: any[]) {
+    const temp = array.sort((a, b) => a.id - b.id);
+    array = [...temp];
+    return Array.from(array);
+  }
+
+  onItemSelect(item: any) {
+    this.filterSimulations();
+  }
+  onItemDeselect(item: any) {
+    this.filterSimulations();
+  }
+  onSelectAll(items: any) {
+    this.filterSimulations();
+  }
+  onDeselectAll(items: any) {
+    this.filterSimulations();
+  }
+
+  private filterSimulations() {
+    this.loading = true;
+    setTimeout(
+      () => {
+        this.selectedSimulations = this.simulations.filter(s =>
+          this.selected.streams.some(e => e.id === s.stream.size) &&
+          this.selected.shifts.some(e => e.id === s.stream.shift) &&
+          this.selected.windows.some(e => e.id === s.config.window) &&
+          this.selected.thresholds.some(e => e.id === s.config.threshold) &&
+          this.selected.nodes.some(e => e.id === s.config.nodes)
+        );
+        this.loading = false;
+      },
+      100
+    );
+  }
+
+  submit(event: any) {
+    this.emitter.emit(this.selectedSimulations);
+  }
 }

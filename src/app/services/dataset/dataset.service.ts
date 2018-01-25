@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Dataset } from 'app/models/dataset.model';
+import { Simulation } from 'app/models/simulation.model';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -8,8 +8,8 @@ export class DatasetService {
 
   constructor(private http: HttpClient) { }
 
-  public getDatasets(): Observable<Dataset[]> {
-    return this.http.get<Dataset[]>('/assets/data/datasets.json');
+  public getDatasets(): Observable<Simulation[]> {
+    return this.http.get<Simulation[]>('/assets/data/datasets.json');
   }
 
 }

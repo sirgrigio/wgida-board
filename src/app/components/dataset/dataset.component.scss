@@ -7,20 +7,42 @@ div.container {
     border-width: 1px;
 }
 
-:host /deep/ datatable-header-cell {
-    padding-left: 0.5rem;
+h1, h4 {
+    line-height: 100%;
 }
 
-:host /deep/ datatable-body-cell {
-    padding-left: 0.5rem;
+h6 {
+    margin: 0;
+    margin-bottom: 0.1rem;
 }
 
-:host /deep/ datatable-body-row.active {
-    background: $wgida-color-200;
-    color: white
+button {
+    color: white;
+    background: $wgida-color-a700;
+    border-color: $wgida-color-a700;
 }
 
-:host /deep/ datatable-body-row:hover:not(.active) {
-    background: $wgida-color-50;
-    color: black;
+button:visited, button:focus, button:active {
+    background: $wgida-color-a900;
+    border-color: $wgida-color-a900;
+}
+
+:host /deep/ .wgida-select .selected-list .c-btn {
+    box-shadow: none !important;
+}
+
+:host /deep/ .wgida-select .list-area {
+    box-shadow: none !important;
+}
+
+:host /deep/ .wgida-select .c-token {
+    background: $wgida-color-500 !important;
+}
+
+:host /deep/ .wgida-select .pure-checkbox label::before {
+    border-color: $wgida-color-500 !important;
+}
+
+:host /deep/ .wgida-select .pure-checkbox input[type="checkbox"]:checked + label:before {
+    background: $wgida-color-500 !important;
 }

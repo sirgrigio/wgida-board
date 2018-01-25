@@ -11,6 +11,8 @@ import { ServicesModule } from 'app/services/services.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingModule } from 'ngx-loading';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, data: { title: 'Wgida/About' } },
@@ -31,15 +33,17 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot(routes, { useHash: true }),
     HttpClientModule,
     ServicesModule,
     NgxDatatableModule,
+    AngularMultiSelectModule,
     LoadingModule.forRoot({
-      backdropBackgroundColour: 'rgba(255,255,255,0.1)',
-      primaryColour: '#00B8D4',
-      secondaryColour: '#00B8D4',
-      tertiaryColour: '#00B8D4'
+      backdropBackgroundColour: 'rgba(198,198,198,0.3)',
+      primaryColour: '#00BCD4',
+      secondaryColour: '#00BCD4',
+      tertiaryColour: '#00BCD4'
     }),
   ],
   providers: [],

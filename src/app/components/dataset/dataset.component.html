@@ -1,4 +1,50 @@
-<div class="container my-3 p-3">
-  <ngx-datatable class="h-100 w-100" [rows]="rows" [columns]="columns" [loadingIndicator]="loading" [selectionType]="'multiClick'" (select)='onSelect($event)'>
-  </ngx-datatable>
+<div class="container p-3">
+  <ngx-loading [show]="loading"></ngx-loading>
+  <div class="row no-gutters p-0">
+    <div class="col-md-9 p-0">
+      <div class="row p-0 col-md-12 align-items-center">
+        <div class="col-md-4">
+          <h6>Streams</h6>
+          <angular2-multiselect [data]="available.streams" [(ngModel)]="selected.streams" [settings]="selectSettings" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemDeselect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeselectAll($event)">
+          </angular2-multiselect>
+        </div>
+        <div class="col-md-4">
+          <h6>Shifts</h6>
+          <angular2-multiselect [data]="available.shifts" [(ngModel)]="selected.shifts" [settings]="selectSettings" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemDeselect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeselectAll($event)">
+          </angular2-multiselect>
+        </div>
+        <div class="col-md-4">
+          <h6>Windows</h6>
+          <angular2-multiselect [data]="available.windows" [(ngModel)]="selected.windows" [settings]="selectSettings" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemDeselect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeselectAll($event)">
+          </angular2-multiselect>
+        </div>
+      </div>
+      <div class="row p-0 mt-2 col-md-12 align-items-center">
+        <div class="col-md-4">
+          <h6>Thresholds</h6>
+          <angular2-multiselect [data]="available.thresholds" [(ngModel)]="selected.thresholds" [settings]="selectSettings" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemDeselect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeselectAll($event)">
+          </angular2-multiselect>
+        </div>
+        <div class="col-md-4">
+          <h6>Nodes</h6>
+          <angular2-multiselect [data]="available.nodes" [(ngModel)]="selected.nodes" [settings]="selectSettings" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemDeselect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeselectAll($event)">
+          </angular2-multiselect>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 p-0">
+      <div class="h-50 row no-gutters align-items-center d-flex justify-content-center">
+        <h1 class="m-0">{{ selectedSimulations.length }}</h1>
+        <h4 class="m-0 ml-3">Simulations</h4>
+      </div>
+      <div class="h-50 w-100 p-1 row no-gutters">
+        <button type="button" [disabled]="loading || !selectedSimulations.length" class="h-100 w-100 btn" (click)="submit()">SUBMIT FILTERS</button>
+      </div>
+    </div>
+  </div>
 </div>
