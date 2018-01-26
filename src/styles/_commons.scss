@@ -1,8 +1,13 @@
 @import 'variables';
+$theme-colors: (
+  "primary": $wgida-color-500,
+  "secondary": $wgida-color-a700,
+);
 @import '../../node_modules/bootstrap/scss/bootstrap';
 @import '~@swimlane/ngx-datatable/release/index.css';
 @import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
+@import '../../node_modules/font-awesome/scss/font-awesome';
 
 @font-face {
   font-family: 'Lato';
@@ -54,6 +59,10 @@ body {
   margin: 0;
   padding: 0;
   background-color: $wgida-color-grey-0;
+}
+
+.card-header {
+  background-color: $wgida-color-grey-1;
 }
 
 h1,

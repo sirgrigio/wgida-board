@@ -2,6 +2,7 @@ import { Stream } from 'app/models/stream.model';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DatasetService } from 'app/services/dataset/dataset.service';
 import { Simulation } from 'app/models/simulation.model';
+import { merge } from 'lodash';
 
 @Component({
   selector: 'app-dataset',
@@ -11,11 +12,12 @@ import { Simulation } from 'app/models/simulation.model';
 export class DatasetComponent implements OnInit {
 
   loading: boolean;
+  submitted: boolean;
   selectSettings = {};
 
   simulations: Simulation[];
   selectedSimulations: Simulation[] = [];
-  @Output() emitter: EventEmitter<Simulation[]> = new EventEmitter();
+  @Output() datasetChange: EventEmitter<Simulation[]> = new EventEmitter();
 
   available = {
     streams: [],
@@ -63,7 +65,7 @@ export class DatasetComponent implements OnInit {
       text: 'Select Values',
       selectAllText: 'Select All',
       unSelectAllText: 'Deselect All',
-      badgeShowLimit: 3,
+      badgeShowLimit: 1,
       classes: 'wgida-select'
     };
   }
@@ -95,6 +97,7 @@ export class DatasetComponent implements OnInit {
 
   private filterSimulations() {
     this.loading = true;
+    this.submitted = false;
     setTimeout(
       () => {
         this.selectedSimulations = this.simulations.filter(s =>
@@ -111,6 +114,12 @@ export class DatasetComponent implements OnInit {
   }
 
   submit(event: any) {
-    this.emitter.emit(this.selectedSimulations);
+    this.submitted = !this.submitted;
+    if (this.submitted) {
+      this.selectSettings = merge(this.selectSettings, { badgeShowLimit: 1 });
+      this.datasetChange.emit(this.selectedSimulations);
+    } else {
+      this.selectSettings = merge(this.selectSettings, { badgeShowLimit: 3 });
+    }
   }
 }
