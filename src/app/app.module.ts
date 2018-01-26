@@ -11,8 +11,12 @@ import { ServicesModule } from 'app/services/services.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingModule } from 'ngx-loading';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { FormsModule } from '@angular/forms';
+import { ChartModule } from '@kiwigrid/ngx-highcharts';
+import * as Highcharts from 'highcharts/js/highcharts.js';
+import * as HighchartsMore from 'highcharts/js/highcharts-more.js';
+import * as HighchartsNoData from 'highcharts/js/modules/no-data-to-display.js';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, data: { title: 'Wgida/About' } },
@@ -39,6 +43,11 @@ const routes: Routes = [
     ServicesModule,
     NgxDatatableModule,
     AngularMultiSelectModule,
+    ChartModule.forRoot(
+      Highcharts,
+      HighchartsMore,
+      HighchartsNoData
+    ),
     LoadingModule.forRoot({
       backdropBackgroundColour: 'rgba(198,198,198,0.3)',
       primaryColour: '#00BCD4',

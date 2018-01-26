@@ -1,8 +1,20 @@
-<div class="my-3">
-  <app-dataset></app-dataset>
+<div id="datasetContainer">
+  <app-dataset (datasetChange)="onDatasetChange($event)"></app-dataset>
 </div>
-<div class="container">
-  <p>
-    results works!
-  </p>
+<div class="container my-3 p-0">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="m-0">Precision and Recall</h4>
+    </div>
+    <div class="card-body">
+      <div id="prColumnChartRow" class="row no-gutters col-md-12">
+        <div class="col-md-6 h-100">
+          <chart class="h-100 row no-gutters" [options]="options.prColumnChartSliding" (load)="prColumnChartSliding = $event.context"></chart>
+        </div>
+        <div class="col-md-6 h-100">
+          <chart class="h-100 row no-gutters" [options]="options.prColumnChartDetected" (load)="prColumnChartDetected = $event.context"></chart>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

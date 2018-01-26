@@ -1,0 +1,26 @@
+@import 'variables';
+
+div.container {
+    position: relative;
+}
+
+#datasetContainer {
+    position: sticky;
+    top: 48px;
+    z-index: 1040;
+}
+
+#prColumnChartRow {
+    height: 400px;
+}
+
+#prColumnChartRow > div > chart {
+    & /deep/ .highcharts-color-0 {
+        fill: $wgida-color-precision;
+        stroke: $wgida-color-precision;
+    }
+    & /deep/ .highcharts-color-1 {
+        fill: $wgida-color-recall;
+        stroke: $wgida-color-recall;
+    }
+}

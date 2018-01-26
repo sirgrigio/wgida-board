@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles/_commons.scss"
+        "styles/_commons.scss",
+        "../node_modules/highcharts/css/highcharts.css"
       ],
       "stylePreprocessorOptions": {
         "includePaths": [
