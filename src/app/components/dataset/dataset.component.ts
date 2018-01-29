@@ -4,6 +4,14 @@ import { DatasetService } from 'app/services/dataset/dataset.service';
 import { Simulation } from 'app/models/simulation.model';
 import { merge } from 'lodash';
 
+export interface IDatasetFilters {
+  streams: { id: number, itemName: string }[];
+  shifts: { id: number, itemName: string }[];
+  windows: { id: number, itemName: string }[];
+  thresholds: { id: number, itemName: string }[];
+  nodes: { id: number, itemName: string }[];
+}
+
 @Component({
   selector: 'app-dataset',
   templateUrl: './dataset.component.html',
@@ -17,9 +25,9 @@ export class DatasetComponent implements OnInit {
 
   simulations: Simulation[];
   selectedSimulations: Simulation[] = [];
-  @Output() datasetChange: EventEmitter<Simulation[]> = new EventEmitter();
+  @Output() datasetChange: EventEmitter<{ dataset: Simulation[], filters: IDatasetFilters }> = new EventEmitter();
 
-  available = {
+  available: IDatasetFilters = {
     streams: [],
     shifts: [],
     windows: [],
@@ -27,7 +35,7 @@ export class DatasetComponent implements OnInit {
     nodes: [],
   };
 
-  selected = {
+  selected: IDatasetFilters = {
     streams: [],
     shifts: [],
     windows: [],
@@ -39,7 +47,7 @@ export class DatasetComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.datasetService.getDatasets().subscribe(
+    this.datasetService.getDataset().subscribe(
       (data: Simulation[]) => {
         this.simulations = data;
         this.simulations.forEach(s => {
@@ -117,7 +125,10 @@ export class DatasetComponent implements OnInit {
     this.submitted = !this.submitted;
     if (this.submitted) {
       this.selectSettings = merge(this.selectSettings, { badgeShowLimit: 1 });
-      this.datasetChange.emit(this.selectedSimulations);
+      this.datasetChange.emit({
+        dataset: this.selectedSimulations,
+        filters: this.selected
+      });
     } else {
       this.selectSettings = merge(this.selectSettings, { badgeShowLimit: 3 });
     }
