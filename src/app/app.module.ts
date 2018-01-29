@@ -16,7 +16,9 @@ import { FormsModule } from '@angular/forms';
 import { ChartModule } from '@kiwigrid/ngx-highcharts';
 import * as Highcharts from 'highcharts/js/highcharts.js';
 import * as HighchartsMore from 'highcharts/js/highcharts-more.js';
+import * as HighchartsHeatmap from 'highcharts/js/modules/heatmap.js';
 import * as HighchartsNoData from 'highcharts/js/modules/no-data-to-display.js';
+import { HeatmapComponent } from 'app/components/results/heatmap/heatmap.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, data: { title: 'Wgida/About' } },
@@ -33,7 +35,8 @@ const routes: Routes = [
     AboutComponent,
     ResultsComponent,
     SimulationsComponent,
-    DatasetComponent
+    DatasetComponent,
+    HeatmapComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ const routes: Routes = [
     ChartModule.forRoot(
       Highcharts,
       HighchartsMore,
+      HighchartsHeatmap,
       HighchartsNoData
     ),
     LoadingModule.forRoot({
