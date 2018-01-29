@@ -1,0 +1,30 @@
+<div class="h-100 w-100">
+  <div class="row no-gutters col-md-12 h-50">
+    <div class="h-100 col-md-3">
+      <chart class="h-100 row no-gutters" [options]="opts.p_van" (load)="pVanHeatmapChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-3">
+      <chart class="h-100 row no-gutters" [options]="opts.p_sim" (load)="pSimHeatmapChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-3">
+      <chart class="h-100 row no-gutters" [options]="opts.p_spl" (load)="pSplHeatmapChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-3">
+      <chart class="h-100 row no-gutters" [options]="opts.p_per" (load)="pPerHeatmapChart = $event.context"></chart>
+    </div>
+  </div>
+  <div class="row no-gutters col-md-12 h-50">
+    <div class="h-100 col-md-3">
+      <chart class="h-100 row no-gutters" [options]="opts.r_van" (load)="rVanHeatmapChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-3">
+      <chart class="h-100 row no-gutters" [options]="opts.r_sim" (load)="rSimHeatmapChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-3">
+      <chart class="h-100 row no-gutters" [options]="opts.r_spl" (load)="rSplHeatmapChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-3">
+      <chart class="h-100 row no-gutters" [options]="opts.r_per" (load)="rPerHeatmapChart = $event.context"></chart>
+    </div>
+  </div>
+</div>
