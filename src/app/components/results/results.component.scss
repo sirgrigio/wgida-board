@@ -4,6 +4,10 @@ div.container {
     position: relative;
 }
 
+div.card-body {
+    position: relative;
+}
+
 #datasetContainer {
     position: sticky;
     top: 48px;
@@ -14,7 +18,7 @@ div.container {
     height: 400px;
 }
 
-#prColumnChartRow > div > chart {
+#prColumnChartRow chart {
     & /deep/ .highcharts-color-0 {
         fill: $wgida-color-precision;
         stroke: $wgida-color-precision;
@@ -23,4 +27,12 @@ div.container {
         fill: $wgida-color-recall;
         stroke: $wgida-color-recall;
     }
+}
+
+#disclaimerRow p {
+    font-weight: 300;
+}
+
+.heatmap-container {
+    height: 450px;
 }
