@@ -15,7 +15,8 @@ import { DatasetService } from 'app/services/dataset/dataset.service';
 })
 export class ResultsComponent implements OnInit {
 
-  algorithms = ['van', 'sim', 'spl', 'per'];
+  private algorithms = ['van', 'sim', 'spl', 'per'];
+  private messages = ['identify', 'freq_req', 'freq_rep', 'verify', 'active_gi'];
 
   simulations: Simulation[];
   filters: IDatasetFilters;
@@ -23,6 +24,9 @@ export class ResultsComponent implements OnInit {
   loaders = {
     prOverall: false,
     prHeatmaps: false,
+    commOverall: false,
+    commWindows: false,
+    commThresholds: false,
   };
 
   options = {
@@ -32,10 +36,18 @@ export class ResultsComponent implements OnInit {
     prColumnChartDetected: assign({
       title: { text: 'Global Iceberg detection over whole simulation **' }
     }, ChartOptions.prColumnChart),
+    ocMessages: assign({
+      title: { text: 'Exchanged messages as percentage of the stream size' }
+    }, ChartOptions.ocStackedColumnChart),
+    ocPayloads: assign({
+      title: { text: 'Exchanged payloads as percentage of the stream size' }
+    }, ChartOptions.ocStackedColumnChart)
   };
 
   prColumnChartSliding: Highcharts.ChartObject;
   prColumnChartDetected: Highcharts.ChartObject;
+  ocMessagesChart: Highcharts.ChartObject;
+  ocPayloadsChart: Highcharts.ChartObject;
 
   heatmaps: HeatmapOptions[] = [{
     xTitle: 'Shifts', xCategories: [],
@@ -56,10 +68,11 @@ export class ResultsComponent implements OnInit {
     this.simulations = event.dataset;
     this.filters = event.filters;
     keys(this.loaders).forEach(k => this.loaders[k] = true);
-    this.datasetService.parseDataset(this.simulations).then(() => {
-      this.updatePROverall();
-      this.updateHeatmaps();
-    }).catch(e => console.log(e));
+    setTimeout(() => this.datasetService.parseDataset(this.simulations).then(() => {
+      setTimeout(() => this.updatePROverall(), 100);
+      setTimeout(() => this.updateHeatmaps(), 100);
+      setTimeout(() => this.updateOC(), 100);
+    }).catch(e => console.log(e)), 100);
   }
 
   private updatePROverall() {
@@ -164,6 +177,21 @@ export class ResultsComponent implements OnInit {
       i += 1;
     });
     return options;
+  }
+
+  private updateOC() {
+    const dict = this.datasetService.getCommunication();
+    this.messages.forEach(m => {
+      const m_data = [];
+      const p_data = [];
+      this.algorithms.forEach(a => {
+        m_data.push(parseFloat((dict[a].weighted.messages[m] * 100).toFixed(4)));
+        p_data.push(parseFloat((dict[a].weighted.payloads[m] * 100).toFixed(4)));
+      });
+      (this.ocMessagesChart.get(m) as Highcharts.SeriesObject).setData(m_data);
+      (this.ocPayloadsChart.get(m) as Highcharts.SeriesObject).setData(p_data);
+    });
+    this.loaders.commOverall = false;
   }
 
   private avg(array: any[]) {
