@@ -1,5 +1,5 @@
 #navbarContainer {
     position: sticky;
     top: 0px;
-    z-index: 1041;
+    z-index: 99999;
 }
