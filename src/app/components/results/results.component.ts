@@ -185,8 +185,8 @@ export class ResultsComponent implements OnInit {
       const m_data = [];
       const p_data = [];
       this.algorithms.forEach(a => {
-        m_data.push(parseFloat((dict[a].weighted.messages[m] * 100).toFixed(4)));
-        p_data.push(parseFloat((dict[a].weighted.payloads[m] * 100).toFixed(4)));
+        m_data.push(dict[a].weighted.messages[m] * 100);
+        p_data.push(dict[a].weighted.payloads[m] * 100);
       });
       (this.ocMessagesChart.get(m) as Highcharts.SeriesObject).setData(m_data);
       (this.ocPayloadsChart.get(m) as Highcharts.SeriesObject).setData(p_data);

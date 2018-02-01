@@ -26,8 +26,12 @@ export class ChartOptions {
             type: 'percentage',
             stackLabels: {
                 enabled: true,
-                fontWeight: 'bold',
-                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                formatter: function() {
+                    return Highcharts.numberFormat((this.total), 4, '.') + '%';
+                }
+            },
+            labels: {
+                format: '{value}%'
             }
         }],
         series: [
@@ -40,8 +44,8 @@ export class ChartOptions {
         tooltip: {
             formatter: function () {
                 return '<b>' + this.series.name + '</b>: ' +
-                    Highcharts.numberFormat((this.y), 2, '.') + '%<br/>' +
-                    Highcharts.numberFormat((this.y / this.point.stackTotal), 2, '.') + '% of total';
+                    Highcharts.numberFormat((this.y), 4, '.') + '%<br/>' +
+                    Highcharts.numberFormat((this.y / this.point.stackTotal) * 100, 2, '.') + '% of total';
             }
         },
         plotOptions: {

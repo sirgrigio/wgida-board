@@ -16,7 +16,7 @@ export class ChartOptions {
         colorAxis: {
             min: 0,
             max: 1,
-            stops: [[0, '#EF9A9A'], [0.5, '#FFF59D'], [1, '#A5D6A7']]
+            stops: [[0, '#E57373'], [0.5, '#FFF176'], [1, '#81C784']]
         },
         legend: {
             align: 'right',
