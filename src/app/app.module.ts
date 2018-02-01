@@ -53,7 +53,7 @@ const routes: Routes = [
       HighchartsNoData
     ),
     LoadingModule.forRoot({
-      backdropBackgroundColour: 'rgba(198,198,198,0.3)',
+      backdropBackgroundColour: 'rgba(246,246,246,0.3)',
       primaryColour: '#00BCD4',
       secondaryColour: '#00BCD4',
       tertiaryColour: '#00BCD4'
