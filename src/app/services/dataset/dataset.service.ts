@@ -162,13 +162,13 @@ export class DatasetService {
               this.thresholdCommunication[s.config.threshold][alg].weighted.payloads[m] += plds / s.stream.size;
             });
           });
-          this.algorithms.forEach(a => {
-            this.messages.forEach(m => {
-              this.overallCommunication[a].raw.messages[m] /= dataset.length;
-              this.overallCommunication[a].raw.payloads[m] /= dataset.length;
-              this.overallCommunication[a].weighted.messages[m] /= dataset.length;
-              this.overallCommunication[a].weighted.payloads[m] /= dataset.length;
-            });
+        });
+        this.algorithms.forEach(a => {
+          this.messages.forEach(m => {
+            this.overallCommunication[a].raw.messages[m] /= dataset.length;
+            this.overallCommunication[a].raw.payloads[m] /= dataset.length;
+            this.overallCommunication[a].weighted.messages[m] /= dataset.length;
+            this.overallCommunication[a].weighted.payloads[m] /= dataset.length;
           });
         });
         resolve();
