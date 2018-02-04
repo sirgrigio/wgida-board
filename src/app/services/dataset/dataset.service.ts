@@ -50,7 +50,7 @@ export class DatasetService {
   constructor(private http: HttpClient) { }
 
   public getDataset(): Observable<Simulation[]> {
-    return this.http.get<Simulation[]>('/assets/data/datasets.json');
+    return this.http.get<Simulation[]>('./assets/data/datasets.json');
   }
 
   public parseDataset(dataset: Simulation[]): Promise<void> {

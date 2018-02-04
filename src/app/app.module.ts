@@ -15,9 +15,10 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { FormsModule } from '@angular/forms';
 import { ChartModule } from '@kiwigrid/ngx-highcharts';
 import * as Highcharts from 'highcharts/js/highcharts.js';
-import * as HighchartsMore from 'highcharts/js/highcharts-more.js';
 import * as HighchartsHeatmap from 'highcharts/js/modules/heatmap.js';
+import * as HighchartsMore from 'highcharts/js/highcharts-more.js';
 import * as HighchartsNoData from 'highcharts/js/modules/no-data-to-display.js';
+import { HighchartsStatic } from '@kiwigrid/ngx-highcharts/dist/HighchartsService';
 import { HeatmapComponent } from 'app/components/results/heatmap/heatmap.component';
 
 const routes: Routes = [
@@ -27,6 +28,13 @@ const routes: Routes = [
   { path: '**', redirectTo: 'about' },
   { path: '', redirectTo: 'about', pathMatch: 'full' },
 ];
+
+export function highchartsFactory() {
+  HighchartsMore(Highcharts);
+  HighchartsHeatmap(Highcharts);
+  HighchartsNoData(Highcharts);
+  return Highcharts;
+}
 
 @NgModule({
   declarations: [
@@ -46,12 +54,7 @@ const routes: Routes = [
     ServicesModule,
     NgxDatatableModule,
     AngularMultiSelectModule,
-    ChartModule.forRoot(
-      Highcharts,
-      HighchartsMore,
-      HighchartsHeatmap,
-      HighchartsNoData
-    ),
+    ChartModule,
     LoadingModule.forRoot({
       backdropBackgroundColour: 'rgba(246,246,246,0.3)',
       primaryColour: '#00BCD4',
@@ -59,7 +62,10 @@ const routes: Routes = [
       tertiaryColour: '#00BCD4'
     }),
   ],
-  providers: [],
+  providers: [{
+    provide: HighchartsStatic,
+    useFactory: highchartsFactory
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

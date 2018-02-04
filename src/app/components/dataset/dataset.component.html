@@ -43,7 +43,7 @@
         </div>
       </div>
       <div id="buttonContainer" [ngClass]="submitted? 'col-md-3 h-100 order-1':'col-md-12 mt-auto h-50 order-3'">
-        <button type="button" [disabled]="loading || !selectedSimulations.length" class="h-100 w-100 btn btn-secondary" (click)="submit()">
+        <button type="button" [disabled]="loading || !selectedSimulations.length" class="h-100 w-100 btn btn-secondary" (click)="submit($event)">
           <span *ngIf="!submitted">SUBMIT FILTERS</span>
           <i *ngIf="submitted" class="fa fa-filter fa-3x" aria-hidden="true"></i>
         </button>
