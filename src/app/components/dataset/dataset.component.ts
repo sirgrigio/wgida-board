@@ -2,7 +2,7 @@ import { Stream } from 'app/models/stream.model';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DatasetService } from 'app/services/dataset/dataset.service';
 import { Simulation } from 'app/models/simulation.model';
-import { merge } from 'lodash';
+import { keys, merge } from 'lodash';
 
 export interface IDatasetFilters {
   streams: { id: number, itemName: string }[];
@@ -84,7 +84,7 @@ export class DatasetComponent implements OnInit {
     }
   }
 
-  private sortSetReturn(array: any[]) {
+  private sortSetReturn(array: any[]): any[] {
     const temp = array.sort((a, b) => a.id - b.id);
     array = [...temp];
     return Array.from(array);
@@ -125,6 +125,7 @@ export class DatasetComponent implements OnInit {
     this.submitted = !this.submitted;
     if (this.submitted) {
       this.selectSettings = merge(this.selectSettings, { badgeShowLimit: 1 });
+      keys(this.selected).forEach(e => this.selected[e] = this.sortSetReturn(this.selected[e]));
       this.datasetChange.emit({
         dataset: this.selectedSimulations,
         filters: this.selected
