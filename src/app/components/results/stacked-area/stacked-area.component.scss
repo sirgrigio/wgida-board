@@ -1,0 +1,28 @@
+@import 'variables';
+
+chart /deep/ .highcharts-container {
+	font-size: 0.5em;
+}
+
+chart {
+    & /deep/ .highcharts-color-0 {
+        fill: $wgida-color-identify;
+        stroke: $wgida-color-identify;
+    }
+    & /deep/ .highcharts-color-1 {
+        fill: $wgida-color-freq-req;
+        stroke: $wgida-color-freq-req;
+    }
+    & /deep/ .highcharts-color-2 {
+        fill: $wgida-color-freq-rep;
+        stroke: $wgida-color-freq-rep;
+    }
+    & /deep/ .highcharts-color-3 {
+        fill: $wgida-color-verify;
+        stroke: $wgida-color-verify;
+    }
+    & /deep/ .highcharts-color-4 {
+        fill: $wgida-color-active-gi;
+        stroke: $wgida-color-active-gi;
+    }
+}

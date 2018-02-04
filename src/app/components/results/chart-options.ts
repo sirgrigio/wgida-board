@@ -43,9 +43,10 @@ export class ChartOptions {
         ],
         tooltip: {
             formatter: function () {
-                return '<b>' + this.series.name + '</b>: ' +
-                    Highcharts.numberFormat((this.y), 4, '.') + '%<br/>' +
-                    Highcharts.numberFormat((this.y / this.point.stackTotal) * 100, 2, '.') + '% of total';
+                return '<span class="highcharts-color-' + this.colorIndex + '">\u25CF</span> ' +
+                    this.series.name + ': <b>' +
+                    Highcharts.numberFormat((this.y), 4, '.') + '%</b><br/><b>' +
+                    Highcharts.numberFormat((this.y / this.point.stackTotal) * 100, 2, '.') + '%</b> of total';
             }
         },
         plotOptions: {

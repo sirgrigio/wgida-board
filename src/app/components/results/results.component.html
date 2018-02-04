@@ -60,4 +60,26 @@
       </div>
     </div>
   </div>
+  <div class="card mt-3">
+    <div class="card-header">
+      <h4 class="m-0">Communication - Thresholds</h4>
+    </div>
+    <div class="card-body">
+      <ngx-loading [show]="loaders.commThresholds"></ngx-loading>
+      <div class="w-100 stacked-area-container">
+        <app-stacked-area [stackedAreaOptions]="stackedAreas[0]"></app-stacked-area>
+      </div>
+    </div>
+  </div>
+  <div class="card mt-3">
+    <div class="card-header">
+      <h4 class="m-0">Communication - Windows</h4>
+    </div>
+    <div class="card-body">
+      <ngx-loading [show]="loaders.commWindows"></ngx-loading>
+      <div class="w-100 stacked-area-container">
+        <app-stacked-area [stackedAreaOptions]="stackedAreas[1]"></app-stacked-area>
+      </div>
+    </div>
+  </div>
 </div>

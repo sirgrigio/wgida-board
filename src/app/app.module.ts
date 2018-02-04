@@ -20,6 +20,7 @@ import * as HighchartsMore from 'highcharts/js/highcharts-more.js';
 import * as HighchartsNoData from 'highcharts/js/modules/no-data-to-display.js';
 import { HighchartsStatic } from '@kiwigrid/ngx-highcharts/dist/HighchartsService';
 import { HeatmapComponent } from 'app/components/results/heatmap/heatmap.component';
+import { StackedAreaComponent } from './components/results/stacked-area/stacked-area.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, data: { title: 'Wgida/About' } },
@@ -44,7 +45,8 @@ export function highchartsFactory() {
     ResultsComponent,
     SimulationsComponent,
     DatasetComponent,
-    HeatmapComponent
+    HeatmapComponent,
+    StackedAreaComponent
   ],
   imports: [
     BrowserModule,

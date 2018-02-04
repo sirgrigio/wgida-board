@@ -7,6 +7,7 @@ import { ChartOptions } from './chart-options';
 import { GlobalIceberg } from 'app/models/global-iceberg.model';
 import { HeatmapOptions } from 'app/components/results/heatmap/heatmap.component';
 import { DatasetService } from 'app/services/dataset/dataset.service';
+import { StackedAreaOptions } from 'app/components/results/stacked-area/stacked-area.component';
 
 @Component({
   selector: 'app-results',
@@ -59,6 +60,14 @@ export class ResultsComponent implements OnInit {
     data: { van: [[], []], sim: [[], []], spl: [[], []], per: [[], []] }
   }];
 
+  stackedAreas: StackedAreaOptions[] = [{
+    xTitle: 'Thresholds', xCategories: [],
+    data: { van: [], sim: [], spl: [], per: [] }
+  }, {
+    xTitle: 'Windows', xCategories: [],
+    data: { van: [], sim: [], spl: [], per: [] }
+  }];
+
   constructor(private datasetService: DatasetService) { }
 
   ngOnInit() {
@@ -71,8 +80,9 @@ export class ResultsComponent implements OnInit {
     setTimeout(() => this.datasetService.parseDataset(this.simulations).then(() => {
       setTimeout(() => this.updatePROverall(), 100);
       setTimeout(() => this.updateHeatmaps(), 100);
-      setTimeout(() => this.updateOC(), 100);
-    }).catch(e => console.log(e)), 100);
+      setTimeout(() => this.updateCommOverall(), 100);
+      setTimeout(() => this.updateStackedAreas(), 100);
+    }).catch(e => console.log(e)), 200);
   }
 
   private updatePROverall() {
@@ -179,7 +189,7 @@ export class ResultsComponent implements OnInit {
     return options;
   }
 
-  private updateOC() {
+  private updateCommOverall() {
     const dict = this.datasetService.getCommunication();
     this.messages.forEach(m => {
       const m_data = [];
@@ -192,6 +202,37 @@ export class ResultsComponent implements OnInit {
       (this.ocPayloadsChart.get(m) as Highcharts.SeriesObject).setData(p_data);
     });
     this.loaders.commOverall = false;
+  }
+
+  private updateStackedAreas() {
+    this.updateCommThresholds();
+    this.updateCommWindows();
+  }
+
+  private updateCommThresholds() {
+    const options: StackedAreaOptions = {
+      xTitle: 'Thresholds', xCategories: this.filters.thresholds.map(e => e.itemName),
+      data: { van: [], sim: [], spl: [], per: [] }
+    };
+    this.filters.thresholds.forEach(t => {
+      const stats = this.datasetService.getThresholdMessageStats(t.id);
+      keys(stats).forEach(k => options.data[k].push(stats[k].weighted));
+    });
+    this.stackedAreas[0] = options;
+    this.loaders.commThresholds = false;
+  }
+
+  private updateCommWindows() {
+    const options: StackedAreaOptions = {
+      xTitle: 'Windows', xCategories: this.filters.windows.map(e => e.itemName),
+      data: { van: [], sim: [], spl: [], per: [] }
+    };
+    this.filters.windows.forEach(w => {
+      const stats = this.datasetService.getWindowMessageStats(w.id);
+      keys(stats).forEach(k => options.data[k].push(stats[k].weighted));
+    });
+    this.stackedAreas[1] = options;
+    this.loaders.commWindows = false;
   }
 
   private avg(array: any[]) {

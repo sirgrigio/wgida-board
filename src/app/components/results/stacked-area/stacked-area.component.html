@@ -1,0 +1,34 @@
+<div class="h-100 w-100">
+  <div class="row no-gutters col-md-12 h-25">
+    <div class="h-100 col-md-6">
+      <chart class="h-100 row no-gutters" [options]="opts.m_van" (load)="mVanStackedAreaChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-6">
+      <chart class="h-100 row no-gutters" [options]="opts.p_van" (load)="pVanStackedAreaChart = $event.context"></chart>
+    </div>
+  </div>
+  <div class="row no-gutters col-md-12 h-25">
+    <div class="h-100 col-md-6">
+      <chart class="h-100 row no-gutters" [options]="opts.m_sim" (load)="mSimStackedAreaChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-6">
+      <chart class="h-100 row no-gutters" [options]="opts.p_sim" (load)="pSimStackedAreaChart = $event.context"></chart>
+    </div>
+  </div>
+  <div class="row no-gutters col-md-12 h-25">
+    <div class="h-100 col-md-6">
+      <chart class="h-100 row no-gutters" [options]="opts.m_spl" (load)="mSplStackedAreaChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-6">
+      <chart class="h-100 row no-gutters" [options]="opts.p_spl" (load)="pSplStackedAreaChart = $event.context"></chart>
+    </div>
+  </div>
+  <div class="row no-gutters col-md-12 h-25">
+    <div class="h-100 col-md-6">
+      <chart class="h-100 row no-gutters" [options]="opts.m_per" (load)="mPerStackedAreaChart = $event.context"></chart>
+    </div>
+    <div class="h-100 col-md-6">
+      <chart class="h-100 row no-gutters" [options]="opts.p_per" (load)="pPerStackedAreaChart = $event.context"></chart>
+    </div>
+  </div>
+</div>
