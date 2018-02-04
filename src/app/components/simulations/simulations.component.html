@@ -11,8 +11,7 @@
       <h4 class="m-0">Simulation - Timeline</h4>
     </div>
     <div class="card-body">
-      <ngx-loading [show]="loaders.timeline"></ngx-loading>
-      <google-chart [data]="timelineData"></google-chart>
+      <google-chart #timelineChart [data]="timelineData"></google-chart>
     </div>
   </div>
 </div>

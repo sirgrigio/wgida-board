@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Simulation } from 'app/models/simulation.model';
 import { DatasetService } from 'app/services/dataset/dataset.service';
 import { IDatasetFilters } from 'app/components/dataset/dataset.component';
+import { assign, merge } from 'lodash';
 
 @Component({
   selector: 'app-simulations',
@@ -9,6 +10,8 @@ import { IDatasetFilters } from 'app/components/dataset/dataset.component';
   styleUrls: ['./simulations.component.scss']
 })
 export class SimulationsComponent implements OnInit {
+
+  @ViewChild('timelineChart') timelineChart;
 
   rows = [];
   columns = [
@@ -27,14 +30,9 @@ export class SimulationsComponent implements OnInit {
     { name: 'PER Re', prop: 'perRecall' }
   ];
 
-  loaders = {
-    timeline: false
-  };
-
-  timelineData =  {
+  timelineData = {
     chartType: 'Timeline',
-    dataTable: [],
-    options: {'title': 'Timeline'},
+    dataTable: null
   };
 
   constructor(private datasetService: DatasetService) { }
@@ -64,6 +62,66 @@ export class SimulationsComponent implements OnInit {
   }
 
   onRowSelected(event: any) {
-    console.log(event);
+    this.drawTimeline(event.selected[0].simulation);
+  }
+
+  private drawTimeline(simulation: Simulation) {
+    let dataTable = [[
+      { type: 'string', id: 'Position' },
+      { type: 'string', id: 'Name' },
+      { type: 'number', id: 'Emergence' },
+      { type: 'number', id: 'Melting' }
+    ]];
+    dataTable = [...dataTable, ...this.distributionRows(simulation)];
+    dataTable = [...dataTable, ...this.generatedRows(simulation)];
+    dataTable = [...dataTable, ...this.detectedRows(simulation, simulation.van, 'VAN')];
+    dataTable = [...dataTable, ...this.detectedRows(simulation, simulation.sim, 'SIM')];
+    dataTable = [...dataTable, ...this.detectedRows(simulation, simulation.spl, 'SPL')];
+    dataTable = [...dataTable, ...this.detectedRows(simulation, simulation.per, 'PER')];
+    this.timelineData.dataTable = null;
+    this.timelineData = assign({}, merge(this.timelineData, { dataTable: dataTable }));
+  }
+
+  private distributionRows(simulation): any[] {
+    const rows = [];
+    let idx = 0;
+    for (let i = 0; i < simulation.stream.size; i += simulation.stream.shift) {
+      const d = simulation.stream.distributions[idx++ % simulation.stream.distributions.length];
+      rows.push([
+        'DIS',
+        d.name,
+        i / 100,
+        Math.min(i + simulation.stream.shift, simulation.stream.size) / 100
+      ]);
+    }
+    return rows;
+  }
+
+  private generatedRows(simulation): any[] {
+    const rows = [];
+    for (let i = 0; i < simulation.generated.length; i++) {
+      const g = simulation.generated[i];
+      rows.push([
+        'GEN',
+        g.value.toString(),
+        g.emergence / 100,
+        g.melting != null ? g.melting / 100 : simulation.stream.size / 100
+      ]);
+    }
+    return rows;
+  }
+
+  private detectedRows(simulation, run, tag): any[] {
+    const rows = [];
+    for (let i = 0; i < run.detected.length; i++) {
+      const g = run.detected[i];
+      rows.push([
+        tag,
+        g.value.toString(),
+        g.emergence / 100,
+        g.melting != null ? g.melting / 100 : simulation.stream.size / 100
+      ]);
+    }
+    return rows;
   }
 }

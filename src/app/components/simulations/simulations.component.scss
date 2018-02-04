@@ -25,3 +25,7 @@ ngx-datatable /deep/ .datatable-body-row.active {
 ngx-datatable /deep/ .datatable-footer {
     background-color: $wgida-color-grey-9 !important;
 }
+
+:host ::ng-deep google-chart > div:first-child {
+    height: 450px;
+}
