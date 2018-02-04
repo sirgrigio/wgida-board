@@ -21,6 +21,7 @@ import * as HighchartsNoData from 'highcharts/js/modules/no-data-to-display.js';
 import { HighchartsStatic } from '@kiwigrid/ngx-highcharts/dist/HighchartsService';
 import { HeatmapComponent } from 'app/components/results/heatmap/heatmap.component';
 import { StackedAreaComponent } from './components/results/stacked-area/stacked-area.component';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, data: { title: 'Wgida/About' } },
@@ -57,6 +58,7 @@ export function highchartsFactory() {
     NgxDatatableModule,
     AngularMultiSelectModule,
     ChartModule,
+    Ng2GoogleChartsModule,
     LoadingModule.forRoot({
       backdropBackgroundColour: 'rgba(246,246,246,0.3)',
       primaryColour: '#00BCD4',

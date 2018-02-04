@@ -1,0 +1,27 @@
+@import 'variables';
+
+#datasetContainer {
+    position: sticky;
+    top: 48px;
+    z-index: 99998;
+}
+
+ngx-datatable /deep/ .datatable-header {
+    background-color: $wgida-color-grey-0 !important;
+}
+
+ngx-datatable /deep/ .datatable-row-even {
+    background-color: white !important;
+}
+
+ngx-datatable /deep/ .datatable-row-odd {
+    background-color: $wgida-color-grey-0 !important;
+}
+
+ngx-datatable /deep/ .datatable-body-row.active {
+    background-color: $wgida-color-a700 !important;
+}
+
+ngx-datatable /deep/ .datatable-footer {
+    background-color: $wgida-color-grey-9 !important;
+}

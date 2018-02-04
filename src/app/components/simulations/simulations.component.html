@@ -1,5 +1,18 @@
-<div class="container">
-  <p>
-    simulations works!
-  </p>
+<div id="datasetContainer">
+  <app-dataset (datasetChange)="onDatasetChange($event)"></app-dataset>
+</div>
+<div class="container my-3 p-0">
+  <div class="card">
+    <ngx-datatable class="bootstrap" [rows]="rows" [columns]="columns" [columnMode]="'force'" [limit]="10" [rowHeight]="'auto'"
+      [footerHeight]="40" [selectionType]="'single'" (select)="onRowSelected($event)"></ngx-datatable>
+  </div>
+  <div class="card mt-3">
+    <div class="card-header">
+      <h4 class="m-0">Simulation - Timeline</h4>
+    </div>
+    <div class="card-body">
+      <ngx-loading [show]="loaders.timeline"></ngx-loading>
+      <google-chart [data]="timelineData"></google-chart>
+    </div>
+  </div>
 </div>
