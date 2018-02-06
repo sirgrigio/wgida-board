@@ -1,31 +1,31 @@
 @mixin font-source-sans($size: false, $color: false, $weight: false, $lh: false) {
-    font-family: 'Lato', Helvetica, Arial, sans-serif;
-    @if $size {
-        font-size: $size;
-    }
-    @if $color {
-        color: $color;
-    }
-    @if $weight {
-        font-weight: $weight;
-    }
-    @if $lh {
-        line-height: $lh;
-    }
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  @if $size {
+    font-size: $size;
+  }
+  @if $color {
+    color: $color;
+  }
+  @if $weight {
+    font-weight: $weight;
+  }
+  @if $lh {
+    line-height: $lh;
+  }
 }
 
 @mixin font-source-sans-emph($size: false, $color: false, $weight: false, $lh: false) {
-    font-family: 'Raleway', Helvetica, Arial, sans-serif;
-    @if $size {
-        font-size: $size;
-    }
-    @if $color {
-        color: $color;
-    }
-    @if $weight {
-        font-weight: $weight;
-    }
-    @if $lh {
-        line-height: $lh;
-    }
+  font-family: 'Raleway', Helvetica, Arial, sans-serif;
+  @if $size {
+    font-size: $size;
+  }
+  @if $color {
+    color: $color;
+  }
+  @if $weight {
+    font-weight: $weight;
+  }
+  @if $lh {
+    line-height: $lh;
+  }
 }

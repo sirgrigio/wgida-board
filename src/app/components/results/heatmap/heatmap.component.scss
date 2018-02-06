@@ -1,5 +1,5 @@
 @import 'variables';
 
-:host /deep/ .highcharts-container {
-	font-size: 0.5em;
+:host ::ng-deep .highcharts-container {
+  font-size: 0.5em;
 }

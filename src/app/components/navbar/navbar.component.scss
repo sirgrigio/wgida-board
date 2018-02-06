@@ -6,19 +6,19 @@
 }
 
 a.navbar-brand {
-    color: white;
+  color: white;
 }
 
 a.nav-link {
-    display: flex;
-    align-items: center;
-    color: white;
-    &:hover {
-        color: black;
-    }
+  display: flex;
+  align-items: center;
+  color: white;
+  &:hover {
+    color: $wgida-color-a900;
+  }
 }
 
 a.navbar-active {
-    color: black;
-    background-color: $wgida-color-grey-0;
+  color: $wgida-color-a900;
+  background-color: $wgida-color-grey-0;
 }
