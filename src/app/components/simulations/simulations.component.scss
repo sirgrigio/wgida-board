@@ -1,31 +1,49 @@
 @import 'variables';
 
 #datasetContainer {
-    position: sticky;
-    top: 48px;
-    z-index: 99998;
+  position: sticky;
+  top: 48px;
+  z-index: 99998;
 }
 
-ngx-datatable /deep/ .datatable-header {
-    background-color: $wgida-color-grey-0 !important;
-}
-
-ngx-datatable /deep/ .datatable-row-even {
+:host ::ng-deep ngx-datatable {
+  & .datatable-header {
+    background-color: $wgida-color-500 !important;
+    color: white;
+  }
+  & .datatable-row-even {
     background-color: white !important;
-}
-
-ngx-datatable /deep/ .datatable-row-odd {
+  }
+  & .datatable-row-odd {
     background-color: $wgida-color-grey-0 !important;
-}
-
-ngx-datatable /deep/ .datatable-body-row.active {
+  }
+  & .datatable-body-row.active {
     background-color: $wgida-color-a700 !important;
+  }
+  & .datatable-body-row:not(.active):hover {
+    background-color: rgba($wgida-color-a100, 0.25) !important;
+  }
+  & .datatable-footer {
+    background-color: $wgida-color-500 !important;
+    & li.active a {
+      background-color: white !important;
+      color: $wgida-color-a700 !important;
+    }
+    & li:hover a {
+      background-color: white !important;
+      color: $wgida-color-a700 !important;
+    }
+  }
+  & div.page-count {
+    padding-left: 0.75rem !important;
+  }
+  & div.empty-row {
+    padding-left: 0.75rem !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+  }
 }
 
-ngx-datatable /deep/ .datatable-footer {
-    background-color: $wgida-color-grey-9 !important;
-}
-
-:host ::ng-deep google-chart > div:first-child {
-    height: 450px;
+:host ::ng-deep google-chart>div:first-child {
+  height: 450px;
 }
