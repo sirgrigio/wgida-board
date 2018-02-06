@@ -32,7 +32,11 @@ export class SimulationsComponent implements OnInit {
 
   timelineData = {
     chartType: 'Timeline',
-    dataTable: null
+    dataTable: null,
+    options: {
+      height: 450,
+      chartArea: { height: 450 }
+    }
   };
 
   constructor(private datasetService: DatasetService) { }
@@ -87,41 +91,24 @@ export class SimulationsComponent implements OnInit {
     let idx = 0;
     for (let i = 0; i < simulation.stream.size; i += simulation.stream.shift) {
       const d = simulation.stream.distributions[idx++ % simulation.stream.distributions.length];
-      rows.push([
-        'DIS',
-        d.name,
-        i / 100,
-        Math.min(i + simulation.stream.shift, simulation.stream.size) / 100
-      ]);
+      rows.push(['DIS', d.name, i / 100, Math.min(i + simulation.stream.shift, simulation.stream.size) / 100]);
     }
     return rows;
   }
 
   private generatedRows(simulation): any[] {
     const rows = [];
-    for (let i = 0; i < simulation.generated.length; i++) {
-      const g = simulation.generated[i];
-      rows.push([
-        'GEN',
-        g.value.toString(),
-        g.emergence / 100,
-        g.melting != null ? g.melting / 100 : simulation.stream.size / 100
-      ]);
-    }
+    simulation.generated.forEach(g => {
+      rows.push(['GEN', g.value.toString(), g.emergence / 100, g.melting != null ? g.melting / 100 : simulation.stream.size / 100]);
+    });
     return rows;
   }
 
   private detectedRows(simulation, run, tag): any[] {
     const rows = [];
-    for (let i = 0; i < run.detected.length; i++) {
-      const g = run.detected[i];
-      rows.push([
-        tag,
-        g.value.toString(),
-        g.emergence / 100,
-        g.melting != null ? g.melting / 100 : simulation.stream.size / 100
-      ]);
-    }
+    run.detected.forEach(g => {
+      rows.push([tag, g.value.toString(), g.emergence / 100, g.melting != null ? g.melting / 100 : simulation.stream.size / 100]);
+    });
     return rows;
   }
 }
