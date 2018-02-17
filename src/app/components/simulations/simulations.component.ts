@@ -34,8 +34,7 @@ export class SimulationsComponent implements OnInit {
     chartType: 'Timeline',
     dataTable: null,
     options: {
-      height: 450,
-      chartArea: { height: 450 }
+      height: 450
     }
   };
 
