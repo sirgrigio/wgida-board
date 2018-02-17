@@ -32,6 +32,13 @@ export class ChartOptions {
                     this.series.name + ': <b>' + this.point.value + '</b>';
             }
         },
+        exporting: {
+            buttons: {
+                contextButton: {
+                    menuItems: ['downloadCSV', 'separator', 'downloadPNG', 'downloadSVG']
+                }
+            }
+        },
         credits: { enabled: false }
     };
 }

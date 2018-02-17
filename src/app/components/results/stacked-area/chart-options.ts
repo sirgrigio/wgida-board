@@ -33,6 +33,13 @@ export class ChartOptions {
                     Highcharts.numberFormat((this.y / this.point.stackTotal) * 100, 2, '.') + '%</b> of total';
             }
         },
+        exporting: {
+            buttons: {
+                contextButton: {
+                    menuItems: ['downloadCSV', 'separator', 'downloadPNG', 'downloadSVG']
+                }
+            }
+        },
         credits: { enabled: false }
     };
 }

@@ -14,6 +14,13 @@ export class ChartOptions {
                 pointPadding: 0,
             }
         },
+        exporting: {
+            buttons: {
+                contextButton: {
+                    menuItems: ['downloadCSV', 'separator', 'downloadPNG', 'downloadSVG']
+                }
+            }
+        },
         credits: { enabled: false }
     };
 
@@ -53,6 +60,13 @@ export class ChartOptions {
             column: {
                 pointPadding: 0,
                 stacking: 'normal',
+            }
+        },
+        exporting: {
+            buttons: {
+                contextButton: {
+                    menuItems: ['downloadCSV', 'separator', 'downloadPNG', 'downloadSVG']
+                }
             }
         },
         credits: { enabled: false }
