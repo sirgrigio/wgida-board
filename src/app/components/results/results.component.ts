@@ -1,5 +1,5 @@
 import { IDatasetFilters } from 'app/components/dataset/dataset.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Simulation } from 'app/models/simulation.model';
 import * as Highcharts from 'highcharts/js/highcharts.js';
 import { assign, keys } from 'lodash';
@@ -8,13 +8,14 @@ import { GlobalIceberg } from 'app/models/global-iceberg.model';
 import { HeatmapOptions } from 'app/components/results/heatmap/heatmap.component';
 import { DatasetService } from 'app/services/dataset/dataset.service';
 import { StackedAreaOptions } from 'app/components/results/stacked-area/stacked-area.component';
+import { ChartUtils } from 'app/utils/ChartUtils';
 
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.scss']
 })
-export class ResultsComponent implements OnInit {
+export class ResultsComponent implements OnInit, OnDestroy {
 
   private algorithms = ['van', 'sim', 'spl', 'per'];
   private messages = ['identify', 'freq_req', 'freq_rep', 'verify', 'active_gi'];
@@ -71,6 +72,13 @@ export class ResultsComponent implements OnInit {
   constructor(private datasetService: DatasetService) { }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    ChartUtils.clearChart(this.prColumnChartSliding);
+    ChartUtils.clearChart(this.prColumnChartDetected);
+    ChartUtils.clearChart(this.ocMessagesChart);
+    ChartUtils.clearChart(this.ocPayloadsChart);
   }
 
   onDatasetChange(event: { dataset: Simulation[], filters: IDatasetFilters }) {

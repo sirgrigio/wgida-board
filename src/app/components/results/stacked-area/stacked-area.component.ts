@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChartUtils } from 'app/utils/ChartUtils';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { ChartOptions } from './chart-options';
 import { ICommunicationComposition } from 'app/services/dataset/dataset.service';
 import * as Highcharts from 'highcharts/js/highcharts.js';
@@ -20,7 +21,7 @@ export interface StackedAreaOptions {
   templateUrl: './stacked-area.component.html',
   styleUrls: ['./stacked-area.component.scss']
 })
-export class StackedAreaComponent implements OnInit, OnChanges {
+export class StackedAreaComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() stackedAreaOptions: StackedAreaOptions;
 
@@ -47,6 +48,17 @@ export class StackedAreaComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    ChartUtils.clearChart(this.mVanStackedAreaChart);
+    ChartUtils.clearChart(this.pVanStackedAreaChart);
+    ChartUtils.clearChart(this.mSimStackedAreaChart);
+    ChartUtils.clearChart(this.pSimStackedAreaChart);
+    ChartUtils.clearChart(this.mSplStackedAreaChart);
+    ChartUtils.clearChart(this.pSplStackedAreaChart);
+    ChartUtils.clearChart(this.mPerStackedAreaChart);
+    ChartUtils.clearChart(this.pPerStackedAreaChart);
   }
 
   ngOnChanges(changes: SimpleChanges) {
