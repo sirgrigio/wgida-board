@@ -1,15 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChartUtils } from 'app/utils/ChartUtils';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Simulation } from 'app/models/simulation.model';
 import { DatasetService } from 'app/services/dataset/dataset.service';
 import { IDatasetFilters } from 'app/components/dataset/dataset.component';
+import { ChartOptions } from 'app/components/results/chart-options';
 import { assign, merge } from 'lodash';
+import { Algorithm } from 'app/models/algorithm.model';
+import * as Highcharts from 'highcharts/js/highcharts.js';
 
 @Component({
   selector: 'app-simulations',
   templateUrl: './simulations.component.html',
   styleUrls: ['./simulations.component.scss']
 })
-export class SimulationsComponent implements OnInit {
+export class SimulationsComponent implements OnInit, OnDestroy {
+
+  private algorithms = ['van', 'sim', 'spl', 'per'];
+  private messages = ['identify', 'freq_req', 'freq_rep', 'verify', 'active_gi'];
 
   @ViewChild('timelineChart') timelineChart;
 
@@ -38,9 +45,26 @@ export class SimulationsComponent implements OnInit {
     }
   };
 
+  options = {
+    ocMessages: assign({
+      title: { text: 'Exchanged messages as percentage of the stream size' }
+    }, ChartOptions.ocStackedColumnChart),
+    ocPayloads: assign({
+      title: { text: 'Exchanged payloads as percentage of the stream size' }
+    }, ChartOptions.ocStackedColumnChart)
+  };
+
+  ocMessagesChart: Highcharts.ChartObject;
+  ocPayloadsChart: Highcharts.ChartObject;
+
   constructor(private datasetService: DatasetService) { }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    ChartUtils.clearChart(this.ocMessagesChart);
+    ChartUtils.clearChart(this.ocPayloadsChart);
   }
 
   onDatasetChange(event: { dataset: Simulation[], filters: IDatasetFilters }) {
@@ -66,6 +90,7 @@ export class SimulationsComponent implements OnInit {
 
   onRowSelected(event: any) {
     this.drawTimeline(event.selected[0].simulation);
+    this.updateCommunication(event.selected[0].simulation);
   }
 
   private drawTimeline(simulation: Simulation) {
@@ -85,7 +110,7 @@ export class SimulationsComponent implements OnInit {
     this.timelineData = assign({}, merge(this.timelineData, { dataTable: dataTable }));
   }
 
-  private distributionRows(simulation): any[] {
+  private distributionRows(simulation: Simulation): any[] {
     const rows = [];
     let idx = 0;
     for (let i = 0; i < simulation.stream.size; i += simulation.stream.shift) {
@@ -95,7 +120,7 @@ export class SimulationsComponent implements OnInit {
     return rows;
   }
 
-  private generatedRows(simulation): any[] {
+  private generatedRows(simulation: Simulation): any[] {
     const rows = [];
     simulation.generated.forEach(g => {
       rows.push(['GEN', g.value.toString(), g.emergence / 100, g.melting != null ? g.melting / 100 : simulation.stream.size / 100]);
@@ -103,11 +128,25 @@ export class SimulationsComponent implements OnInit {
     return rows;
   }
 
-  private detectedRows(simulation, run, tag): any[] {
+  private detectedRows(simulation: Simulation, run: Algorithm, tag: string): any[] {
     const rows = [];
     run.detected.forEach(g => {
       rows.push([tag, g.value.toString(), g.emergence / 100, g.melting != null ? g.melting / 100 : simulation.stream.size / 100]);
     });
     return rows;
+  }
+
+  private updateCommunication(simulation: Simulation) {
+    const dict = this.datasetService.getSimulationCommunication(simulation);
+    this.messages.forEach(m => {
+      const m_data = [];
+      const p_data = [];
+      this.algorithms.forEach(a => {
+        m_data.push(dict[a].weighted.messages[m] * 100);
+        p_data.push(dict[a].weighted.payloads[m] * 100);
+      });
+      (this.ocMessagesChart.get(m) as Highcharts.SeriesObject).setData(m_data);
+      (this.ocPayloadsChart.get(m) as Highcharts.SeriesObject).setData(p_data);
+    });
   }
 }

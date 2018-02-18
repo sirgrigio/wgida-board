@@ -43,3 +43,30 @@
     padding-bottom: 0.25rem !important;
   }
 }
+
+#overallCommunicationRow {
+  height: 400px;
+}
+
+#overallCommunicationRow ::ng-deep chart {
+  & .highcharts-color-0 {
+    fill: $wgida-color-identify;
+    stroke: $wgida-color-identify;
+  }
+  & .highcharts-color-1 {
+    fill: $wgida-color-freq-req;
+    stroke: $wgida-color-freq-req;
+  }
+  & .highcharts-color-2 {
+    fill: $wgida-color-freq-rep;
+    stroke: $wgida-color-freq-rep;
+  }
+  & .highcharts-color-3 {
+    fill: $wgida-color-verify;
+    stroke: $wgida-color-verify;
+  }
+  & .highcharts-color-4 {
+    fill: $wgida-color-active-gi;
+    stroke: $wgida-color-active-gi;
+  }
+}
