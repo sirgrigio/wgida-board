@@ -91,20 +91,20 @@ export class StackedAreaComponent implements OnInit, OnChanges, OnDestroy {
     if (mChart) {
       mChart.xAxis[0].setTitle({ text: options.xTitle });
       mChart.xAxis[0].setCategories(options.xCategories);
-      (mChart.get('identify') as Highcharts.SeriesObject).setData(data.map(e => e.messages['identify']));
-      (mChart.get('freq_req') as Highcharts.SeriesObject).setData(data.map(e => e.messages['freq_req']));
-      (mChart.get('freq_rep') as Highcharts.SeriesObject).setData(data.map(e => e.messages['freq_rep']));
-      (mChart.get('verify') as Highcharts.SeriesObject).setData(data.map(e => e.messages['verify']));
-      (mChart.get('active_gi') as Highcharts.SeriesObject).setData(data.map(e => e.messages['active_gi']));
+      (mChart.get('identify') as Highcharts.SeriesObject).setData(data.map(e => e.messages['identify'] * 100));
+      (mChart.get('freq_req') as Highcharts.SeriesObject).setData(data.map(e => e.messages['freq_req'] * 100));
+      (mChart.get('freq_rep') as Highcharts.SeriesObject).setData(data.map(e => e.messages['freq_rep'] * 100));
+      (mChart.get('verify') as Highcharts.SeriesObject).setData(data.map(e => e.messages['verify'] * 100));
+      (mChart.get('active_gi') as Highcharts.SeriesObject).setData(data.map(e => e.messages['active_gi'] * 100));
     }
     if (pChart) {
       pChart.xAxis[0].setTitle({ text: options.xTitle });
       pChart.xAxis[0].setCategories(options.xCategories);
-      (pChart.get('identify') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['identify']));
-      (pChart.get('freq_req') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['freq_req']));
-      (pChart.get('freq_rep') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['freq_rep']));
-      (pChart.get('verify') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['verify']));
-      (pChart.get('active_gi') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['active_gi']));
+      (pChart.get('identify') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['identify'] * 100));
+      (pChart.get('freq_req') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['freq_req'] * 100));
+      (pChart.get('freq_rep') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['freq_rep'] * 100));
+      (pChart.get('verify') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['verify'] * 100));
+      (pChart.get('active_gi') as Highcharts.SeriesObject).setData(data.map(e => e.payloads['active_gi'] * 100));
     }
   }
 }
