@@ -61,19 +61,17 @@ export class DatasetService {
         this.overallCommunication = {};
         this.windowCommunication = {};
         this.thresholdCommunication = {};
-        this.messages.forEach(m => {
-          this.algorithms.forEach(a => {
-            this.overallCommunication[a] = {
-              raw: {
-                messages: { identify: 0, freq_req: 0, freq_rep: 0, verify: 0, active_gi: 0 },
-                payloads: { identify: 0, freq_req: 0, freq_rep: 0, verify: 0, active_gi: 0 },
-              },
-              weighted: {
-                messages: { identify: 0, freq_req: 0, freq_rep: 0, verify: 0, active_gi: 0 },
-                payloads: { identify: 0, freq_req: 0, freq_rep: 0, verify: 0, active_gi: 0 },
-              }
-            };
-          });
+        this.algorithms.forEach(a => {
+          this.overallCommunication[a] = {
+            raw: {
+              messages: { identify: 0, freq_req: 0, freq_rep: 0, verify: 0, active_gi: 0 },
+              payloads: { identify: 0, freq_req: 0, freq_rep: 0, verify: 0, active_gi: 0 },
+            },
+            weighted: {
+              messages: { identify: 0, freq_req: 0, freq_rep: 0, verify: 0, active_gi: 0 },
+              payloads: { identify: 0, freq_req: 0, freq_rep: 0, verify: 0, active_gi: 0 },
+            }
+          };
         });
         dataset.forEach(s => {
           if (!this.prShiftWindowDict[s.stream.shift]) {
@@ -143,6 +141,8 @@ export class DatasetService {
             prShiftWindow[alg].recall += s[alg].recall;
             prWindowThreshold[alg].precision += s[alg].precision;
             prWindowThreshold[alg].recall += s[alg].recall;
+            this.windowCommunication[s.config.window][alg].count += 1;
+            this.thresholdCommunication[s.config.threshold][alg].count += 1;
             this.messages.forEach(m => {
               const msgs = s[alg].communication[m].messages;
               const plds = s[alg].communication[m].payloads;
@@ -150,12 +150,10 @@ export class DatasetService {
               this.overallCommunication[alg].raw.payloads[m] += plds;
               this.overallCommunication[alg].weighted.messages[m] += msgs / s.stream.size;
               this.overallCommunication[alg].weighted.payloads[m] += plds / s.stream.size;
-              this.windowCommunication[s.config.window][alg].count += 1;
               this.windowCommunication[s.config.window][alg].raw.messages[m] += msgs;
               this.windowCommunication[s.config.window][alg].raw.messages[m] += plds;
               this.windowCommunication[s.config.window][alg].weighted.messages[m] += msgs / s.stream.size;
               this.windowCommunication[s.config.window][alg].weighted.payloads[m] += plds / s.stream.size;
-              this.thresholdCommunication[s.config.threshold][alg].count += 1;
               this.thresholdCommunication[s.config.threshold][alg].raw.messages[m] += msgs;
               this.thresholdCommunication[s.config.threshold][alg].raw.messages[m] += plds;
               this.thresholdCommunication[s.config.threshold][alg].weighted.messages[m] += msgs / s.stream.size;
@@ -201,6 +199,25 @@ export class DatasetService {
     return this.overallCommunication;
   }
 
+  public getSimulationCommunication(simulation: Simulation): ICommunication {
+    if (simulation) {
+      const s = simulation;
+      const dict = {};
+      this.algorithms.forEach(a => {
+        dict[a] = { raw: { messages: {}, payloads: {} }, weighted: { messages: {}, payloads: {} } };
+        this.messages.forEach(m => {
+          dict[a].raw.messages[m] = s[a].communication[m].messages;
+          dict[a].raw.payloads[m] = s[a].communication[m].payloads;
+          dict[a].weighted.messages[m] = s[a].communication[m].messages / s.stream.size;
+          dict[a].weighted.payloads[m] = s[a].communication[m].payloads / s.stream.size;
+        });
+      });
+      return dict as ICommunication;
+    } else {
+      return undefined;
+    }
+  }
+
   public getWindowMessageStats(window: number): ICommunication {
     return this.computeIC(this.windowCommunication[window]);
   }
@@ -215,13 +232,13 @@ export class DatasetService {
       this.algorithms.forEach(a => {
         dict[a] = { raw: { messages: {}, payloads: {} }, weighted: { messages: {}, payloads: {} } };
         this.messages.forEach(m => {
-          dict[a].raw.messages[m] = e[a].raw.messages[m] / e.count;
-          dict[a].raw.payloads[m] = e[a].raw.payloads[m] / e.count;
-          dict[a].weighted.messages[m] = e[a].weighted.messages[m] / e.count;
-          dict[a].weighted.payloads[m] = e[a].weighted.payloads[m] / e.count;
+          dict[a].raw.messages[m] = e[a].raw.messages[m] / e[a].count;
+          dict[a].raw.payloads[m] = e[a].raw.payloads[m] / e[a].count;
+          dict[a].weighted.messages[m] = e[a].weighted.messages[m] / e[a].count;
+          dict[a].weighted.payloads[m] = e[a].weighted.payloads[m] / e[a].count;
         });
       });
-      return e;
+      return dict as ICommunication;
     } else {
       return undefined;
     }
