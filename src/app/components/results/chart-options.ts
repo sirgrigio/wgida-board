@@ -4,7 +4,7 @@ export class ChartOptions {
 
     public static prColumnChart: Highcharts.Options = {
         xAxis: { categories: ['Vanilla', 'Simple', 'Splitter', 'Perfect'] },
-        yAxis: [{ title: { text: null }, min: 0, max: 1, type: 'percentage' }],
+        yAxis: [{ title: { text: null }, min: 0, max: 1 }],
         series: [
             { id: 'precision', type: 'column', name: 'Precision' },
             { id: 'recall', type: 'column', name: 'Recall' },
@@ -30,7 +30,6 @@ export class ChartOptions {
         yAxis: [{
             title: { text: null },
             min: 0,
-            type: 'percentage',
             stackLabels: {
                 enabled: true,
                 formatter: function() {

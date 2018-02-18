@@ -8,7 +8,6 @@ export class ChartOptions {
         yAxis: {
             title: { text: null },
             min: 0,
-            type: 'percentage',
             labels: {
                 format: '{value}%'
             }
