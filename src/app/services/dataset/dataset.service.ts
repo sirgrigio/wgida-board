@@ -175,10 +175,12 @@ export class DatasetService {
   }
 
   public getShiftWindowPR(shift: number, window: number): IPrecisionRecall {
+    if (!this.prShiftWindowDict[shift]) { return undefined; }
     return this.computeIPR(this.prShiftWindowDict[shift][window]);
   }
 
   public getWindowThresholdPR(window: number, threshold: number): IPrecisionRecall {
+    if (!this.prWindowThresholdDict[window]) { return undefined; }
     return this.computeIPR(this.prWindowThresholdDict[window][threshold]);
   }
 
