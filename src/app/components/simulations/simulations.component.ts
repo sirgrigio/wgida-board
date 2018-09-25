@@ -22,7 +22,7 @@ export class SimulationsComponent implements OnInit, OnDestroy {
 
   rows = [];
   columns = [
-    { name: 'Stream', prop: 'size' },
+    { name: 'Size', prop: 'size' },
     { name: 'Shift', prop: 'shift' },
     { name: 'Window', prop: 'window' },
     { name: 'Threshold', prop: 'threshold' },
