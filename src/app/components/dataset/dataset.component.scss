@@ -56,6 +56,14 @@ button[disabled] {
   }
   & .c-token {
     background: $wgida-color-500 !important;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  & .c-label {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 90%;
   }
   & .pure-checkbox label::before {
     border-color: $wgida-color-500 !important;

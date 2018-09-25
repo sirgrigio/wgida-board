@@ -10,12 +10,18 @@
           </angular2-multiselect>
         </div>
         <div class="p-0 pr-3" [ngClass]="submitted? 'col-md-2':'col-md-4'">
+          <h6>Sizes</h6>
+          <angular2-multiselect [data]="available.sizes" [(ngModel)]="selected.sizes" [settings]="selectSettings" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemDeselect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeselectAll($event)">
+          </angular2-multiselect>
+        </div>
+        <div class="p-0 pr-3" [ngClass]="submitted? 'col-md-2':'col-md-4'">
           <h6>Shifts</h6>
           <angular2-multiselect [data]="available.shifts" [(ngModel)]="selected.shifts" [settings]="selectSettings" (onSelect)="onItemSelect($event)"
             (onDeSelect)="onItemDeselect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeselectAll($event)">
           </angular2-multiselect>
         </div>
-        <div class="p-0 pr-3" [ngClass]="submitted? 'col-md-2':'col-md-4'">
+        <div class="p-0 pr-3" [ngClass]="submitted? 'col-md-2':'col-md-4 pt-2'">
           <h6>Windows</h6>
           <angular2-multiselect [data]="available.windows" [(ngModel)]="selected.windows" [settings]="selectSettings" (onSelect)="onItemSelect($event)"
             (onDeSelect)="onItemDeselect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeselectAll($event)">

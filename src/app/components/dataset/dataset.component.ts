@@ -1,11 +1,11 @@
-import { Stream } from 'app/models/stream.model';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DatasetService } from 'app/services/dataset/dataset.service';
 import { Simulation } from 'app/models/simulation.model';
 import { keys, merge } from 'lodash';
 
 export interface IDatasetFilters {
-  streams: { id: number, itemName: string }[];
+  streams: { id: string, itemName: string }[];
+  sizes: { id: number, itemName: string }[];
   shifts: { id: number, itemName: string }[];
   windows: { id: number, itemName: string }[];
   thresholds: { id: number, itemName: string }[];
@@ -29,6 +29,7 @@ export class DatasetComponent implements OnInit {
 
   available: IDatasetFilters = {
     streams: [],
+    sizes: [],
     shifts: [],
     windows: [],
     thresholds: [],
@@ -37,6 +38,7 @@ export class DatasetComponent implements OnInit {
 
   selected: IDatasetFilters = {
     streams: [],
+    sizes: [],
     shifts: [],
     windows: [],
     thresholds: [],
@@ -51,13 +53,15 @@ export class DatasetComponent implements OnInit {
       (data: Simulation[]) => {
         this.simulations = data;
         this.simulations.forEach(s => {
-          this.addIfAbsent(this.available.streams, s.stream.size, s.stream.size.toPrecision(2));
+          this.addIfAbsent(this.available.streams, s.stream.type, s.stream.type);
+          this.addIfAbsent(this.available.sizes, s.stream.size, s.stream.size.toPrecision(2));
           this.addIfAbsent(this.available.shifts, s.stream.shift, s.stream.shift.toPrecision(2));
           this.addIfAbsent(this.available.windows, s.config.window, s.config.window.toPrecision(2));
           this.addIfAbsent(this.available.thresholds, s.config.threshold, s.config.threshold.toString());
           this.addIfAbsent(this.available.nodes, s.config.nodes, s.config.nodes.toString());
         });
         this.selected.streams = this.sortSetReturn(this.available.streams);
+        this.selected.sizes = this.sortSetReturn(this.available.sizes);
         this.selected.shifts = this.sortSetReturn(this.available.shifts);
         this.selected.windows = this.sortSetReturn(this.available.windows);
         this.selected.thresholds = this.sortSetReturn(this.available.thresholds);
@@ -78,7 +82,7 @@ export class DatasetComponent implements OnInit {
     };
   }
 
-  private addIfAbsent(array: any[], v: any, label: string) {
+  private addIfAbsent(array: any[], v: string|number, label: string) {
     if (!array.some(e => e.id === v)) {
       array.push({ id: v, 'itemName': label });
     }
@@ -109,7 +113,8 @@ export class DatasetComponent implements OnInit {
     setTimeout(
       () => {
         this.selectedSimulations = this.simulations.filter(s =>
-          this.selected.streams.some(e => e.id === s.stream.size) &&
+          this.selected.streams.some(e => e.id === s.stream.type) &&
+          this.selected.sizes.some(e => e.id === s.stream.size) &&
           this.selected.shifts.some(e => e.id === s.stream.shift) &&
           this.selected.windows.some(e => e.id === s.config.window) &&
           this.selected.thresholds.some(e => e.id === s.config.threshold) &&
