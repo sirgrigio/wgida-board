@@ -11,22 +11,22 @@ div.container {
 
 #selectRow .col-md-4 {
   flex-grow: 1;
-  transition: all 400ms ease;
+  transition: all 300ms ease;
 }
 
 #buttonContainer.col-md-12 {
   flex-grow: 1;
-  transition: all 300ms ease;
+  transition: all 400ms ease;
 }
 
 #selectRow .col-md-2 {
   flex-shrink: 1;
-  transition: all 400ms ease;
+  transition: all 300ms ease;
 }
 
 #buttonContainer.col-md-3 {
   flex-shrink: 1;
-  transition: all 300ms ease;
+  transition: all 400ms ease;
 }
 
 h1,
